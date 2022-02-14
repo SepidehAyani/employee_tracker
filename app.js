@@ -4,8 +4,8 @@ const inquirer = require('inquirer');
 // DB Connection
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'BootCamp@MN@22!',
+    user: 'user',
+    password: 'password',
     database: 'employees_db'
 })
 
