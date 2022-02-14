@@ -39,12 +39,13 @@ When the user starts the application, then they are presented with the following
 ## Instructions
 ```  
 git clone https://github.com/SepidehAyani/employee_tracker.git
+follow [this](https://flaviocopes.com/mysql-how-to-install/) to install MySql and setup your own username & password
 ```
 
 #### Languages and libraries used in this project:
 - <a href="https://www.npmjs.com/">NPM</a>
 - <a href="https://nodejs.org/">Node.js</a>
-- <a href="https://www.npmjs.com/package/mysql2#installation">MySQL2</a>
+- <a href="https://www.mysql.com/">MySQL</a>
 - <a href="https://www.npmjs.com/package/express">Express.js</a>
 - <a href="https://www.npmjs.com/package/inquirer">Inquirer.js</a>
 - <a href="https://getbootstrap.com/">Bootstrap</a>
