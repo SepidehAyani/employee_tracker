@@ -44,12 +44,10 @@ git clone https://github.com/SepidehAyani/employee_tracker.git
 #### Languages and libraries used in this project:
 - <a href="https://www.npmjs.com/">NPM</a>
 - <a href="https://www.npmjs.com/package/mysql2#installation">MySQL2</a>
-- <a href="https://www.npmjs.com/package/uuid">UUID</a>
 - <a href="https://nodejs.org/">Node.js</a>
 - <a href="https://www.npmjs.com/package/express">Express.js</a>
 - <a href="https://www.npmjs.com/package/inquirer">Inquirer.js</a>
 - <a href="https://getbootstrap.com/">Bootstrap</a>
-- <a href="https://fonts.google.com/">Google Fonts</a>
 
 #### Contribution Guidelines:
 ```  
