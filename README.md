@@ -27,6 +27,13 @@ When the user starts the application, then they are presented with the following
 - Add an employee: user is prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database.
 - And update an employee role: user is prompted to select an employee to update and their new role and this information is updated in the database.
 
+#### You also can:
+- Update employee managers.
+- View employees by manager.
+- View employees by department.
+- Delete departments, roles, and employees.
+- View the total utilized budget of a department –in other words, the combined salaries of all employees in that department.
+
 ## Project Links
 [Repo Link](https://github.com/SepidehAyani/employee_tracker) <br>
 

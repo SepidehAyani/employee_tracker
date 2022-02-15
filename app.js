@@ -29,14 +29,14 @@ function options() {
             'View all roles',
             'View employees by manager',
             'View employees by department',
-            'View Department Budgets',
+            'View department budgets',
             'Add an employee',
             'Add a department',
             'Add a role',
-            'Update employee role',
-            'Delete department',
-            'Delete role',
-            'Delete employee',
+            'Update employee manager',
+            'Delete a department',
+            'Delete a role',
+            'Delete a employee',
             'EXIT'
         ]
     }).then(function (answer) {
@@ -56,7 +56,7 @@ function options() {
             case 'View employees by department':
                 viewEmployeesByDepartment();
                 break;
-            case 'View Department Budgets':
+            case 'View department budgets':
                 viewDepartmentBudget();
                 break;
             case 'Add an employee':
@@ -68,16 +68,16 @@ function options() {
             case 'Add a role':
                 addRole();
                 break;
-            case 'Update employee role':
-                updateRole();
+            case 'Update employee manager':
+                updateManager();
                 break;
-            case 'Delete department':
+            case 'Delete a department':
                 deleteDepartment();
                 break;
-            case 'Delete role':
+            case 'Delete a role':
                 deleteRole();
                 break;
-            case 'Delete employee':
+            case 'Delete a employee':
                 deleteEmployee();
                 break;
             case 'EXIT':
@@ -120,7 +120,7 @@ function viewRoles() {
     })
 };
 
-// View employees by manager
+// BONUS: View employees by manager
 function viewEmployeesByManager() {
     const sql = `SELECT employee.first_name, 
                     employee.last_name, 
@@ -136,7 +136,7 @@ function viewEmployeesByManager() {
     });
 };
 
-// View employees by department
+// BONUS: View employees by department
 function viewEmployeesByDepartment() {
     const sql = `SELECT employee.first_name, 
                     employee.last_name, 
@@ -152,7 +152,7 @@ function viewEmployeesByDepartment() {
     });
 };
 
-// View budget By Department
+// BONUS: View budget By Department
 function viewDepartmentBudget() {
     console.log('Budget By Department:');
     const sql = `SELECT department.id AS id, 
@@ -218,7 +218,7 @@ function addEmployee() {
                 function (err) {
                     if (err) throw err;
                     console.log('Your employee has been added!');
-                    options();
+                    viewEmployees();
                 })
         })
     })
@@ -243,7 +243,7 @@ function addDepartment() {
             if (err) throw err;
             console.log('Your department has been added!');
             console.table('All Departments:', res);
-            options();
+            viewDepartments();
         })
     })
 };
@@ -293,40 +293,40 @@ function addRole() {
                     if (err) throw err;
                     console.log('Your new role has been added!');
                     console.table('All Roles:', res);
-                    options();
+                    viewRoles();
                 })
         })
     })
 };
 
-// Update a role in the DB
-function updateRole() {
+// BONUS: Update employee manager
+function updateManager() {
     inquirer.prompt([
         {
             type: "input",
             message: "Enter the employee's ID you want to be updated",
-            name: "updateEmploy"
+            name: "updateManager"
         },
         {
             type: "input",
-            message: "Enter the new role ID for that employee",
-            name: "newRole"
+            message: "Enter the new Manager ID for that employee",
+            name: "newManager"
         }
     ]).then(function (res) {
-        const updateEmploy = res.updateEmploy;
-        const newRole = res.newRole;
-        const queryUpdate = `UPDATE employee SET role_id = "${newRole}" WHERE id = "${updateEmploy}"`;
+        const updateManager = res.updateManager;
+        const newManager = res.newManager;
+        const queryUpdate = `UPDATE employee SET manager_id = "${newManager}" WHERE id = "${updateManager}"`;
         connection.query(queryUpdate, function (err, res) {
             if (err) {
                 throw err;
             }
             console.table(res);
-            options();
+            viewEmployees();
         })
     });
 }
 
-// Delete a department in the DB
+// BONUS: Delete a department in the DB
 async function deleteDepartment() {
     const answer = await inquirer.prompt([
         {
@@ -348,7 +348,7 @@ async function deleteDepartment() {
     viewDepartments();
 };
 
-// Delete a role in the DB
+// BONUS: Delete a role in the DB
 async function deleteRole() {
     const answer = await inquirer.prompt([
         {
@@ -370,7 +370,7 @@ async function deleteRole() {
     viewRoles();
 };
 
-// Delete an employee in the DB
+// BONUS: Delete an employee in the DB
 async function deleteEmployee() {
     const answer = await inquirer.prompt([
         {
@@ -390,7 +390,6 @@ async function deleteEmployee() {
     )
     console.log('Employee has been removed on the system!');
     viewEmployees();
-
 };
 
 // Exit the app
