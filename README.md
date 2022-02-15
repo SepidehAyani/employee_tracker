@@ -48,7 +48,6 @@ git clone https://github.com/SepidehAyani/employee_tracker.git
 - <a href="https://www.npmjs.com/package/mysql2">MySQL2</a>
 - <a href="https://www.npmjs.com/package/express">Express.js</a>
 - <a href="https://www.npmjs.com/package/inquirer">Inquirer.js</a>
-- <a href="https://getbootstrap.com/">Bootstrap</a>
 
 ## Contribution Guidelines:
 ```  
