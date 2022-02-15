@@ -36,7 +36,7 @@ function options() {
             'Update employee manager',
             'Delete a department',
             'Delete a role',
-            'Delete a employee',
+            'Delete an employee',
             'EXIT'
         ]
     }).then(function (answer) {
@@ -77,7 +77,7 @@ function options() {
             case 'Delete a role':
                 deleteRole();
                 break;
-            case 'Delete a employee':
+            case 'Delete an employee':
                 deleteEmployee();
                 break;
             case 'EXIT':
