@@ -3,16 +3,20 @@ const inquirer = require('inquirer');
 
 // DB Connection
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: '127.0.0.1',
+    port: '3306',
     user: 'user',
     password: 'password',
     database: 'employees_db'
 })
 
 connection.connect(function (err) {
-    if (err) throw err;
-    options();
-})
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
+    }
+    console.log('connected as id ' + connection.threadId);
+});
 
 // List of options to choose
 function options() {
