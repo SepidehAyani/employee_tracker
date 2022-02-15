@@ -40,7 +40,7 @@ When the user starts the application, then they are presented with the following
 ```  
 git clone https://github.com/SepidehAyani/employee_tracker.git
 ```
-follow [this](https://flaviocopes.com/mysql-how-to-install/) to install MySql and setup your own username & password
+#### Note: follow [this](https://flaviocopes.com/mysql-how-to-install/) to install MySql and setup your own username & password
 
 ## Languages and libraries used in this project:
 - <a href="https://www.npmjs.com/">NPM</a>
