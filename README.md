@@ -45,7 +45,7 @@ follow [this](https://flaviocopes.com/mysql-how-to-install/) to install MySql an
 ## Languages and libraries used in this project:
 - <a href="https://www.npmjs.com/">NPM</a>
 - <a href="https://nodejs.org/">Node.js</a>
-- <a href="https://www.mysql.com/">MySQL</a>
+- <a href="https://www.npmjs.com/package/mysql2">MySQL2</a>
 - <a href="https://www.npmjs.com/package/express">Express.js</a>
 - <a href="https://www.npmjs.com/package/inquirer">Inquirer.js</a>
 - <a href="https://getbootstrap.com/">Bootstrap</a>

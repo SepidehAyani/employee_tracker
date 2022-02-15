@@ -1,5 +1,6 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const inquirer = require('inquirer');
+const consoleTable = require('console.table')
 
 // DB Connection
 const connection = mysql.createConnection({
@@ -10,13 +11,11 @@ const connection = mysql.createConnection({
     database: 'employees_db'
 })
 
+// Check the connection
 connection.connect(function (err) {
-    if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-    }
-    console.log('connected as id ' + connection.threadId);
-});
+    if (err) throw err;
+    options();
+})
 
 // List of options to choose
 function options() {
@@ -28,11 +27,16 @@ function options() {
             'View all employees',
             'View all departments',
             'View all roles',
+            'View employees by manager',
+            'View employees by department',
+            'View Department Budgets',
             'Add an employee',
             'Add a department',
             'Add a role',
             'Update employee role',
-            'Delete an employee',
+            'Delete department',
+            'Delete role',
+            'Delete employee',
             'EXIT'
         ]
     }).then(function (answer) {
@@ -46,6 +50,15 @@ function options() {
             case 'View all roles':
                 viewRoles();
                 break;
+            case 'View employees by manager':
+                viewEmployeesByManager();
+                break;
+            case 'View employees by department':
+                viewEmployeesByDepartment();
+                break;
+            case 'View Department Budgets':
+                viewDepartmentBudget();
+                break;
             case 'Add an employee':
                 addEmployee();
                 break;
@@ -58,7 +71,13 @@ function options() {
             case 'Update employee role':
                 updateRole();
                 break;
-            case 'Delete an employee':
+            case 'Delete department':
+                deleteDepartment();
+                break;
+            case 'Delete role':
+                deleteRole();
+                break;
+            case 'Delete employee':
                 deleteEmployee();
                 break;
             case 'EXIT':
@@ -99,6 +118,53 @@ function viewRoles() {
         console.table('All Roles:', res);
         options();
     })
+};
+
+// View employees by manager
+function viewEmployeesByManager() {
+    const sql = `SELECT employee.first_name, 
+                    employee.last_name, 
+                    employee.manager_id AS manager
+                    FROM employee 
+                    LEFT JOIN role ON employee.manager_id = role.id 
+                    LEFT JOIN department ON role.department_id = department.id`;
+    connection.query(sql, (error, response) => {
+        if (error) throw error;
+        console.log('Employees by Manager:');
+        console.table(response);
+        options();
+    });
+};
+
+// View employees by department
+function viewEmployeesByDepartment() {
+    const sql = `SELECT employee.first_name, 
+                    employee.last_name, 
+                    department.name AS department
+                    FROM employee 
+                    LEFT JOIN role ON employee.role_id = role.id 
+                    LEFT JOIN department ON role.department_id = department.id`;
+    connection.query(sql, (error, response) => {
+        if (error) throw error;
+        console.log('Employees by Department:');
+        console.table(response);
+        options();
+    });
+};
+
+// View budget By Department
+function viewDepartmentBudget() {
+    console.log('Budget By Department:');
+    const sql = `SELECT department.id AS id, 
+                    department.name AS name,
+                    SUM(salary) AS budget
+                    FROM  role  
+                    INNER JOIN department ON role.id = department.id GROUP BY role.id`;
+    connection.query(sql, (error, response) => {
+        if (error) throw error;
+        console.table(response);
+        options();
+    });
 };
 
 // Add an employee to the DB
@@ -235,10 +301,96 @@ function addRole() {
 
 // Update a role in the DB
 function updateRole() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter the employee's ID you want to be updated",
+            name: "updateEmploy"
+        },
+        {
+            type: "input",
+            message: "Enter the new role ID for that employee",
+            name: "newRole"
+        }
+    ]).then(function (res) {
+        const updateEmploy = res.updateEmploy;
+        const newRole = res.newRole;
+        const queryUpdate = `UPDATE employee SET role_id = "${newRole}" WHERE id = "${updateEmploy}"`;
+        connection.query(queryUpdate, function (err, res) {
+            if (err) {
+                throw err;
+            }
+            console.table(res);
+            options();
+        })
+    });
+}
+
+// Delete a department in the DB
+async function deleteDepartment() {
+    const answer = await inquirer.prompt([
+        {
+            name: "first",
+            type: "input",
+            message: "Enter the department name you want to remove:  "
+        }
+    ]);
+
+    connection.query('DELETE FROM department WHERE ?',
+        {
+            name: answer.first
+        },
+        function (err) {
+            if (err) throw err;
+        }
+    )
+    console.log('Department has been removed on the system!');
+    viewDepartments();
+};
+
+// Delete a role in the DB
+async function deleteRole() {
+    const answer = await inquirer.prompt([
+        {
+            name: "first",
+            type: "input",
+            message: "Enter the role ID you want to remove:  "
+        }
+    ]);
+
+    connection.query('DELETE FROM role WHERE ?',
+        {
+            id: answer.first
+        },
+        function (err) {
+            if (err) throw err;
+        }
+    )
+    console.log('Role has been removed on the system!');
+    viewRoles();
 };
 
 // Delete an employee in the DB
-function deleteEmployee() {
+async function deleteEmployee() {
+    const answer = await inquirer.prompt([
+        {
+            name: "first",
+            type: "input",
+            message: "Enter the employee ID you want to remove:  "
+        }
+    ]);
+
+    connection.query('DELETE FROM employee WHERE ?',
+        {
+            id: answer.first
+        },
+        function (err) {
+            if (err) throw err;
+        }
+    )
+    console.log('Employee has been removed on the system!');
+    viewEmployees();
+
 };
 
 // Exit the app
