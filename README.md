@@ -34,7 +34,7 @@ When the user starts the application, then they are presented with the following
 ![Project Preview](assets/img/overview.png)
 
 ## Demo
-[![Project demo](assets/img/demo.png)](assets/img/demo.mov)
+[![Project demo](assets/img/demo.png)](assets/img/demo.mp4)
 
 ## Instructions
 ```  
